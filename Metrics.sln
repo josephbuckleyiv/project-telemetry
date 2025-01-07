@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "metrics", "Metrics\metrics.esproj", "{2EAD2572-4E4A-430E-874D-BD52DAF9A598}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTelTest_1", "..\OTelTest_1\OTelTest_1\OTelTest_1.csproj", "{91843683-6472-4CFF-AFE4-E9E05A46813E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2EAD2572-4E4A-430E-874D-BD52DAF9A598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EAD2572-4E4A-430E-874D-BD52DAF9A598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EAD2572-4E4A-430E-874D-BD52DAF9A598}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2EAD2572-4E4A-430E-874D-BD52DAF9A598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EAD2572-4E4A-430E-874D-BD52DAF9A598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EAD2572-4E4A-430E-874D-BD52DAF9A598}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{91843683-6472-4CFF-AFE4-E9E05A46813E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91843683-6472-4CFF-AFE4-E9E05A46813E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91843683-6472-4CFF-AFE4-E9E05A46813E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91843683-6472-4CFF-AFE4-E9E05A46813E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
