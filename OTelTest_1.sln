@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTelTest_1", "OTelTest_1\OTelTest_1.csproj", "{BD31DA99-2339-457D-9758-4E05287076EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD31DA99-2339-457D-9758-4E05287076EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD31DA99-2339-457D-9758-4E05287076EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD31DA99-2339-457D-9758-4E05287076EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD31DA99-2339-457D-9758-4E05287076EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
