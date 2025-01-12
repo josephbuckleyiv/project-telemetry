@@ -14,18 +14,18 @@ export class RingBuffer {
         this._latestDate = Date.now();
     }
 
-    Add(dataPoint: TimeSeriesDataPoint[]): void {
-        if (dataPoint[0].Date <= this._latestDate) return;
+    Add(dataPoint: TimeSeriesDataPoint): void {
+        if (dataPoint.Date <= this._latestDate) return;
         if (this._length == this._maxLength) {
-            this._buffer.push(dataPoint[0]);
+            this._buffer.push(dataPoint);
             this._buffer.shift();
-            this._latestDate = dataPoint[0].Date;
+            this._latestDate = dataPoint.Date;
             return;
         }
 
-        this._latestDate = dataPoint[0].Date;
+        this._latestDate = dataPoint.Date;
         this._length++;
-        this._buffer.push(dataPoint[0]);
+        this._buffer.push(dataPoint);
     }
 
     Initialize(dataPoints: TimeSeriesDataPoint[]): void {
