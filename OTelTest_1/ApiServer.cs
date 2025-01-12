@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace OTelTest_1
 {
@@ -29,6 +30,10 @@ namespace OTelTest_1
             {
                 var context = await _listener.GetContextAsync();
                 var request = context.Request;
+                Uri uri = new Uri(request.Url.AbsoluteUri);
+                string query= uri.Query;
+                var queryParams = HttpUtility.ParseQueryString(query);
+                
 
                 if (request.HttpMethod == "GET" && request.Url?.AbsolutePath == "/post")
                 {
@@ -42,7 +47,7 @@ namespace OTelTest_1
 
                     var json = JsonSerializer.Serialize(stuff);
                     var buffer = Encoding.UTF8.GetBytes(json);
-                    Console.WriteLine("Sending something");
+                    Console.WriteLine("Posting something");
                     response.OutputStream.Write(buffer);
                     response.Close();
 
@@ -51,13 +56,17 @@ namespace OTelTest_1
                 {
                     var stuff = new TimeSeriesModel { Date = DateTimeOffset.Now.ToUnixTimeSeconds() };
                     
+
                     var response = context.Response;
                     response.StatusCode = (int)HttpStatusCode.OK;
                     response.ContentType = "application/json";
                     response.Headers.Add("Access-Control-Allow-Origin", "*");
                     response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 
-                    var json = SqliteDatabase.GetTimeSlice(); ;
+                    var start = int.Parse(queryParams["start"]);
+                    var end = int.Parse(queryParams["end"]);
+
+                    var json = SqliteDatabase.GetTimeSlice(start, end); 
                     var buffer = Encoding.UTF8.GetBytes(json);
                     Console.WriteLine("Sending something");
                     response.OutputStream.Write(buffer);
