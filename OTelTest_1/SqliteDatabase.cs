@@ -88,7 +88,6 @@ namespace OTelTest_1
                         Date = (long)reader.GetValue(0),
                         Count = (long)reader.GetValue(1)
                     };
-                    Console.WriteLine(dataPoint.Date);
                     dataPoints.Add(dataPoint);
                 }
 
