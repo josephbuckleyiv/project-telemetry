@@ -55,7 +55,7 @@ namespace OTelTest_1
             }
         }
 
-        public static string GetTimeSlice()
+        public static string GetTimeSlice(int start, int end)
         {
             try
             {
@@ -63,10 +63,21 @@ namespace OTelTest_1
                 SQLitePCL.Batteries.Init();
                 connection.Open();
 
-                SqliteCommand retrieveTimeSlice = new SqliteCommand(@"
-            SELECT CAST(strftime('%s', 'now') AS INTEGER) AS Current, CAST(COUNT(Date) AS INTEGER) FROM Metrics
-            WHERE Date > strftime('%s', 'now') - 5 AND Date < strftime('%s', 'now');", connection);
-                using SqliteDataReader reader = retrieveTimeSlice.ExecuteReader();
+                using SqliteCommand command = connection.CreateCommand();
+                 command.CommandText = @"WITH RECURSIVE dates AS (
+                          SELECT @end AS time
+                          UNION ALL
+                          SELECT time - 1
+                          FROM dates
+                          WHERE time > @start
+                        )
+                        SELECT CAST(time AS INTEGER), CAST(COUNT(m.Date) AS INTEGER)  FROM dates d
+                        LEFT JOIN Metrics m ON m.Date > d.time - 5 AND m.Date < d.time
+                        GROUP BY d.time;";
+                command.Parameters.AddWithValue("@start", start);
+                command.Parameters.AddWithValue("@end", end);
+                command.Prepare();
+                using SqliteDataReader reader = command.ExecuteReader();
 
                 ICollection<TimeSeriesModel> dataPoints = new List<TimeSeriesModel>();
 
@@ -77,6 +88,7 @@ namespace OTelTest_1
                         Date = (long)reader.GetValue(0),
                         Count = (long)reader.GetValue(1)
                     };
+                    Console.WriteLine(dataPoint.Date);
                     dataPoints.Add(dataPoint);
                 }
 
