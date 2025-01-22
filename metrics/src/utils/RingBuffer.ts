@@ -1,5 +1,5 @@
 
-import { TimeSeriesDataPoint } from './Utils/types.ts';
+import { TimeSeriesDataPoint } from './types.ts';
 
 export class RingBuffer {
     public _buffer: TimeSeriesDataPoint[];

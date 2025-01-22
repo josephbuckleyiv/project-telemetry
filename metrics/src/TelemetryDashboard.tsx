@@ -1,55 +1,25 @@
 import { useRef, useState } from 'react';
 import './App.css';
-import {
-    LineChart,
-    ResponsiveContainer,
-    XAxis,
-    YAxis,
-    Line
-} from "recharts"
 import { useEffect } from 'react';
-import { filter, interval, switchMap,  map, pipe, mergeMap } from 'rxjs';
+import { filter, interval, switchMap} from 'rxjs';
 
 // Classes
-import { TimeSeriesBuffer } from './TimeSeriesBuffer.ts';
-import { RingBuffer } from './RingBuffer.ts';
+import { RingBuffer } from './utils/RingBuffer.ts';
 
 // Types
 import { TimeSeriesDataPoint } from './Utils/types.ts';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
 
+// Components
+import TimeGraph from './components'
 
-const graph = (points: TimeSeriesDataPoint[]) => {
-    console.log("RERENDER")
-    return ( <ResponsiveContainer>
-        <LineChart
-            width={500}
-            height={300}
-            data={points}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-            }}
-            
-        >
-            <XAxis dataKey="Date" />
-            <YAxis />
-            <Line isAnimationActive={true} animationDuration={1000} type="monotone" dataKey="Count" stroke="#82ca9d" dot={false} />
-        </LineChart>
-    </ResponsiveContainer>
-    )
-}
-
-function App() {
+function TelemetryDashboard() {
     const MINUTE_DIFFERENCE = 59;
 
     const [initialized, setInitialized] = useState(false);
 
     const [data, setData] = useState([] as TimeSeriesDataPoint[]);
-    const buf = new TimeSeriesBuffer();
     const ringBuf = useMemo(() => new RingBuffer(60), []);
 
     // Time Related
@@ -114,7 +84,7 @@ function App() {
   return (
       <>
           <div style={{ width: "400px", height: "300px" }}>
-              { graph(data) }
+              <TimeGraph points={data} />
           </div>
           <button onClick={post}> Press to end world hunger</button>
           <button onClick={initialize}> GIMME!</button>
@@ -122,4 +92,4 @@ function App() {
   )
 }
 
-export default App
+export default TelemetryDashboard
