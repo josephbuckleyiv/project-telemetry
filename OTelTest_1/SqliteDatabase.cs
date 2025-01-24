@@ -99,6 +99,32 @@ namespace OTelTest_1
             }
         }
 
+
+        public static string GetTotal()
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=C:\\Users\\Joseph\\source\\repos\\OTelTest_1\\OTelTest_1\\metrics.db");
+                SQLitePCL.Batteries.Init();
+                connection.Open();
+
+                SqliteCommand command = new SqliteCommand("SELECT COUNT(Id) FROM Metrics", connection);
+                var obj = command.ExecuteScalar();
+
+
+                // Process the data here
+                var dude = Convert.ToInt32(obj);
+
+                return JsonSerializer.Serialize(dude);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+
+        }
+
         public static void PostData(TimeSeriesModel timeData)
         {
             try

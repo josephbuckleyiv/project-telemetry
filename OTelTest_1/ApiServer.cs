@@ -43,6 +43,7 @@ namespace OTelTest_1
 
                     if (request.HttpMethod == "GET" && request.Url?.AbsolutePath == "/post")
                     {
+                        
                         PostData(context.Response);
 
                     }
@@ -68,8 +69,6 @@ namespace OTelTest_1
                     }
                     else if (request.HttpMethod == "GET" && request.Url?.AbsolutePath == "/initialize")
                     {
-                        var stuff = new TimeSeriesModel { Date = DateTimeOffset.Now.ToUnixTimeSeconds() };
-                        //SqliteDatabase.PostData(stuff);
                         var response = context.Response;
                         response.StatusCode = (int)HttpStatusCode.OK;
                         response.ContentType = "application/json";
@@ -80,9 +79,11 @@ namespace OTelTest_1
                         var buffer = Encoding.UTF8.GetBytes(json);
                         response.OutputStream.Write(buffer);
                         response.Close();
-
                     }
-
+                    else if(request.HttpMethod == "GET" && request.Url?.AbsolutePath == "/total")
+                    {
+                        GetTotal(context.Response);
+                    }
                     else
                     {
                         var response = context.Response;
@@ -105,20 +106,27 @@ namespace OTelTest_1
         {
             await _telemetry.Instrument(async () =>
             {
-                var stuff = new TimeSeriesModel { Date = DateTimeOffset.Now.ToUnixTimeSeconds() };
-                SqliteDatabase.PostData(stuff);
-                var response = res;
-                response.StatusCode = (int)HttpStatusCode.OK;
-                response.ContentType = "application/json";
-                response.Headers.Add("Access-Control-Allow-Origin", "*");
-                response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-
-                var json = JsonSerializer.Serialize(stuff);
-                var buffer = Encoding.UTF8.GetBytes(json);
-                response.OutputStream.Write(buffer);
-                response.Close();
+                res.StatusCode = (int)HttpStatusCode.OK;
+                res.ContentType = "application/json";
+                res.Headers.Add("Access-Control-Allow-Origin", "*");
+                res.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                res.Close();
                 return;
             });
+        }
+
+        public async Task GetTotal(HttpListenerResponse res)
+        {
+            res.StatusCode = (int)HttpStatusCode.OK;
+            res.ContentType = "application/json";
+            res.Headers.Add("Access-Control-Allow-Origin", "*");
+            res.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+            var json = SqliteDatabase.GetTotal();
+            var buffer = Encoding.UTF8.GetBytes(json);
+            res.OutputStream.Write(buffer);
+            res.Close();
+
         }
 
 
