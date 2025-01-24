@@ -1,2 +1,2 @@
-export { default } from './TimeGraph';
+export { TimeGraph } from './TimeGraph';
 
